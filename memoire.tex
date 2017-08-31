@@ -1,0 +1,123 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+%\usepackage[default,regular,bold]{sourceserifpro} % définition de la police à utiliser dans le pdf. ref : http://www.tug.dk/FontCatalogue/sourceserifprolight/
+
+%\usepackage{gfsartemisia}
+\usepackage{mathpazo}
+\usepackage[scaled=0.95]{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsfonts,amssymb}
+
+\usepackage{setspace} %package pour l'interligne
+
+\usepackage[francais, english]{babel} 
+
+\AddThinSpaceBeforeFootnotes % à insérer si on utilise \usepackage[french]{babel}
+\FrenchFootnotes % à insérer si on utilise \usepackage[french]{babel}
+
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry} % définition des marges
+%\usepackage{hyperref} %pour rendre la table des matières cliquable a l'intérieur du document
+\usepackage{fancyhdr} %package pour les entetes et les pieds de page , voir http://www.xm1math.net/doculatex/entetepied.html
+
+\usepackage{shorttoc} %ce  package permet de générer un sommaire
+
+\usepackage{minted}% package pour la coloration de code dans latex
+\usemintedstyle{manni}
+
+\usepackage{graphicx}
+
+\usepackage{pdfpages} 
+
+\pagestyle{fancy} % définition du style des entetes et pied de page
+\renewcommand{\headrulewidth}{1pt}
+%\fancyhead[C]{\textbf{page \thepage}} 
+%\fancyhead[L]{\thesection}
+\fancyhead[R]{\small}
+
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\textbf{ \thepage}} 
+%\fancyfoot[L]{truc}
+%\fancyfoot[R]{\leftmark}
+
+%pour les tableaux
+\usepackage{array,multirow,makecell}
+\setcellgapes{1pt}
+\makegapedcells
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash }b{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash }b{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
+
+
+\author{Bamouni Kevin}
+\title{Rapport d'alternance : Détection d'anomalie par isolation en assurance vie et missions transverses}
+
+\onehalfspacing % définition d'un interligne 1.5 pour tout le document
+
+\begin{document}
+
+\maketitle
+
+\input{titres/titre.tex}
+
+\input{titres/garde.tex}
+
+\pagenumbering{roman} % on lui informe que les chiffres à utiliser sont les romains
+\setcounter{page}{1} % commence à numéroter à partir de 1
+
+\input{titres/resume.tex}
+
+\input{titres/abstract.tex}
+
+\input{titres/remerciements.tex}
+
+% le sommaire, il est moins détaillé que la table des matières
+\selectlanguage{french}
+%\renewcommand{\contentsname}{Sommaire} %permet de changer le titre table des matières en sommaire dans le document
+%\setcounter{tocdepth}{1} %defini la profondeur maximale des titres du sommaire
+%\tableofcontents % Sommire en debut et/ou table des matières en fin de rapport
+{\setlength{\baselineskip}{0.9\baselineskip}
+\shorttableofcontents{Sommaire}{1}
+\par}
+
+
+\pagenumbering{arabic} % fin numérotation en chiffres romains, % début numérotation en chiffres arabs3
+\setcounter{page}{1} 
+
+% Introduction
+\input{textes/intro.tex}
+
+\input{textes/part1.tex}
+
+\input{textes/part2.tex}
+
+\input{textes/conclusion.tex}
+
+\chapter*{Annexe}
+
+\section*{Code python de l'application de la méthode d'isolation}
+
+\includepdf[pages=-]{financial_data_1__py.pdf}
+
+\section*{Code R de la calibration de Nielson-Siegel-Svensson}
+
+\includepdf[pages=-]{codes_R.pdf}
+
+{\setlength{\baselineskip}{0.9\baselineskip}
+\setcounter{tocdepth}{5} %defini la profondeur maximale des titres du sommaire
+\tableofcontents % Sommire en debut et/ou table des matières en fin de rapport
+\par}
+
+\listoffigures
+
+\listoftables
+
+\bibliographystyle{plain}
+\bibliography{biblio.bib}
+\cite{ManfredGilli2010}
+\cite{Liu2012}
+\cite{Hull2015}
+\cite{STORN1997}
+\cite{Befec-PriceWaterhouse1996}
+\\
+\end{document}
