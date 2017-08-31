@@ -5,17 +5,15 @@
 
 \section{Méthode d'isolation des anomalies}
 
-Dans un ensemble de données, les anomalies seront celles qui sont peu nombreuses avec des caractéristiques très différentes, "rares" .
+Dans un ensemble de données, les anomalies seront celles qui sont peu nombreuses avec des caractéristiques très différentes.
 
 La détection d'anomalie, consiste à isoler ces données rares et fortement différentes d'une base de données. C'est un concept utilisé dans différents domaines comme la sécurité informatique (détection d'intrusion, ),.
 
 Il existe une multitude de méthodes de détection d'anomalies, toutes basées en générale sur les techniques de calcul de distance ou de noyaux. Ces méthodes supposent que des données "normales" auront tendance à être fortement groupée, rapprochées et les données qui sont éloignées d'un ou de plusieurs groupes de données sont considérées comme des anomalies.
 
-Sachant que dans un ensemble de données, les anomalies sont plus ou moins très rare et très différentes, la méthode procède par isolation pour détecter ses anomalies.
+Sachant que dans un ensemble de données, les anomalies sont plus ou moins très rare et très différentes, la méthode procède par isolation pour détecter ses anomalies. L'isolation consiste à construire un arbre de décision à partir des données jusqu'à ce que chaque individu soit dans une et une seule feuille.
 
-L'isolation consiste juste à construire un arbre de décision à partir des données de telle sorte dans une feuille se trouve un et un seul individu.
-
-Une fois que les données sont isolés dans l'arbre de décision, la probabilité qu'une donnée soit une anomalie est quantifié par sa profondeur dans l'arbre.
+Une fois que les données sont isolés dans l'arbre de décision ou d'isolation, la probabilité qu'une donnée soit une anomalie est quantifié par sa profondeur dans l'arbre. Une données qui a été isolé très vite lors de la construction de l'arbre de décision a plus de probabilité d'être une anomalie.
 
 Pour effectuer la détection d'anomalie par isolation, on choisi au hasard un échantillon dans une base de données, ensuite on choisi des variables au hasard parmi les variables de l'échantillon et on déroule un arbre de décision.
 
@@ -23,9 +21,87 @@ On répète cette méthode n fois, on crée donc n arbres de d'isolation et d'é
 
 \section{Phase d'apprentissage}
 
+La phase d'apprentissage consiste à construire un ensemble d'arbre soit des \emph{iTree}, sur les données pour créer une forêt d'isolation, les \emph{iForest}.
+
+Le principe est relativement simple, et s'effectuer essentiellement en deux phases dont la première sera la construction de l'arbre de décision, puis par du bootstrapping la construction de la forêt de décision.
+
+\subsection*{Construction de l'arbre de décision}
+
+La construction de l'arbre d'isolation se fait par échantillonnage sur les deux dimensions, variables et individus.
+Considérons la base de données  suivante :
+Elle est formée de $m$ individus $I$ et de $n$ variables $V$.
+
+\begin{table}[H]
+\centering
+\caption{Base de données}
+\label{bdd}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+ & $V_1$ & $V_2$ & $\cdots$ & $V_n$ \\ \hline
+$I_1$ &  &  &  &  \\ \hline
+$I_2$ &  &  &  &  \\ \hline
+$\vdots$ &  &  &  &  \\ \hline
+$I_m$ &  &  &  &  \\ \hline
+\end{tabular}
+\end{table}
+
+Premièrement, un échantillonnage est effectué de façon aléatoire, sur les individus et sur les variables qui les caractérisent.
+
+\begin{table}[H]
+\centering
+\caption{Échantillon}
+\label{ech}
+\begin{tabular}{|l|l|l|l|}
+\hline
+ & $V_1$ &  $\cdots$ & $V_n$ \\ \hline
+$I_1$ &  &  &  \\ \hline
+$\vdots$ &  &  &  \\ \hline
+$I_m$ &  &  &  \\ \hline
+\end{tabular}
+\end{table}
+
+A partir de l'échantillon choisi de façon aléatoire, un arbre d'isolation (décision) est construit, de telle sorte que chaque individu se trouve seul sur une feuille, c'est à dire bout de chaque arbre. c'est la condition d'arrêt de la construction d'un arbre, mais toute fois elle peut être manipuler de telle sorte à pouvoir arrêter la construction d'un arbre trop profond.
+
+Dans la phase d'apprentissage, trois paramètres sont donc nécessaires pour le déroulement de l'algorithme : 
+
+\begin{itemize}
+    \item $X$ : les données
+    \item $\psi$ : la taille de l'échantillon
+\end{itemize}
+
+La taille de l'échantillon $\psi$ permet de contrôler la taille des données d'apprentissage. C'est un paramètre qui joue donc notamment sur la profondeur de l'arbre d'isolation et donc sur la performance de la méthode d'isolation. Par ailleurs, a partir d'une certaine taille, les performances de détections tendent à devenir constante, généralement $\psi=256$ est suffisant pour effectuer une détection d'anomalie dans une base de données.
+
+\subsection*{Construction de la forêt d'arbre de décision}
+
+Une forêt d'arbre de décision est composée de plusieurs arbres de décision. Sa construction s'effectue en ré-échantillonnant plusieurs fois avec la construction d'un arbre par échantillon. Ainsi, un autre paramètre vient s'ajouter aux deux autres, $t$ qui désigne le nombre d'arbre qui compose la forêt. En générale, le chemin d'isolation d'un individu dans un arbre converge avant la construction de $t=100$ arbres.
+
 \section{Phase d'évaluation}
 
+La phase d'évaluation consiste à calculer le taille moyenne du chemin d'isolation d'un individu sur l'ensemble de la forêt.
+
+La taille $h(x)$ du chemin d'un individu $I$, correspond au nombre de noeuds $e$, entre la base de l'arbre d'isolation et le noeud d'extrémité (bout de l'arbre) où cet individu a été isolé. 
+
+Lorsque la taille du chemin d'isolation d'un individu dépasse une certaine limite $hlim$ prédéterminée, la taille du chemin est estimée par $hlim+c(Size)$, avec $c(Size)$ une valeur d'ajustement\cite{Liu2012}.
+
 \section{Les anomalies et leurs scores}
+
+Un score, pour déterminer le degré d'anormalité d'un individu est essentiel à toute méthode de détection d'anomalie.
+Le score $s$ d'un individu I se calcul comme :
+\begin{equation}
+    s(I,\psi)=2^\frac{E(h(x))}{c(\psi=)}
+\end{equation}
+
+\begin{itemize}
+    \item $E(h(x))$ est la moyenne des tailles du chemin d'isolation d'un individu I dans une forêt d'isolation.
+    \item $c(\psi)$ désigne la moyenne des $h(x)$ dans un échantillon
+\end{itemize}
+
+Dans certaines conditions la valeur du score est directement déduite :
+\begin{itemize}
+    \item $E(h(x)) \rightarrow 0,  s \rightarrow 1;$
+    \item $E(h(x)) \rightarrow \psi-1,  s \rightarrow 0; $
+    \item $E(h(x)) \rightarrow c(\psi),  s \rightarrow 0.5;$
+\end{itemize}
 
 \chapter{Application}
 
