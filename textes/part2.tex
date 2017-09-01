@@ -72,16 +72,18 @@ Dans la phase d'apprentissage, trois paramètres sont donc nécessaires pour le 
 La taille de l'échantillon $\psi$ permet de contrôler la taille des données d'apprentissage. C'est un paramètre qui joue donc notamment sur la profondeur de l'arbre d'isolation et donc sur la performance de la méthode d'isolation. Par ailleurs, a partir d'une certaine taille, les performances de détections tendent à devenir constante, généralement $\psi=256$ est suffisant pour effectuer une détection d'anomalie dans une base de données.
 
 \subsection*{Construction de la forêt d'arbre de décision}
-
 Une forêt d'arbre de décision est composée de plusieurs arbres de décision. Sa construction s'effectue en ré-échantillonnant plusieurs fois avec la construction d'un arbre par échantillon. Ainsi, un autre paramètre vient s'ajouter aux deux autres, $t$ qui désigne le nombre d'arbre qui compose la forêt. En générale, le chemin d'isolation d'un individu dans un arbre converge avant la construction de $t=100$ arbres.
+\\
+\\
+La complexité dans le pire des cas ce la phase d'apprentissage est de $O(t\psi^2)$ et temps, et de $O(t\psi)$ en espace.
 
 \section{Phase d'évaluation}
-
 La phase d'évaluation consiste à calculer le taille moyenne du chemin d'isolation d'un individu sur l'ensemble de la forêt.
-
 La taille $h(x)$ du chemin d'un individu $I$, correspond au nombre de noeuds $e$, entre la base de l'arbre d'isolation et le noeud d'extrémité (bout de l'arbre) où cet individu a été isolé. 
-
-Lorsque la taille du chemin d'isolation d'un individu dépasse une certaine limite $hlim$ prédéterminée, la taille du chemin est estimée par $hlim+c(Size)$, avec $c(Size)$ une valeur d'ajustement\cite{Liu2012}.
+Lorsque la taille du chemin d'isolation d'un individu dépasse une certaine limite $hlim$ prédéterminée, la taille du chemin est estimée par $hlim+c(Size)$, avec $c(Size)$ une valeur d'ajustement \footnote{\cite{Liu2012}}.
+\\
+\\
+La complexité dans le pire des cas ce la phase d'évaluation est de $O(nt\psi)$ et temps, avec $n$ le nombre de test.
 
 \section{Les anomalies et leurs scores}
 
