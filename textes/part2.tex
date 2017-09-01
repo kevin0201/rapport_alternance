@@ -5,25 +5,25 @@
 
 \section{Méthode d'isolation des anomalies}
 
-Dans un ensemble de données, les anomalies seront celles qui sont peu nombreuses avec des caractéristiques très différentes.
+Dans un ensemble de données, les anomalies peu nombreuses avec des caractéristiques très différentes.
 
-La détection d'anomalie, consiste à isoler ces données rares et fortement différentes d'une base de données. C'est un concept utilisé dans différents domaines comme la sécurité informatique (détection d'intrusion, ),.
+La détection d'anomalies, consiste à isoler ces données rares et fortement différentes d'une base de données. C'est un concept utilisé dans différents domaines comme la sécurité informatique (détection d'intrusion, ),.
 
-Il existe une multitude de méthodes de détection d'anomalies, toutes basées en générale sur les techniques de calcul de distance ou de noyaux. Ces méthodes supposent que des données "normales" auront tendance à être fortement groupée, rapprochées et les données qui sont éloignées d'un ou de plusieurs groupes de données sont considérées comme des anomalies.
+Il existe une multitude de méthodes de détection d'anomalies, toutes basées en générale sur les calculs de distance ou de noyaux. Ces méthodes supposent que des données "normales" auront tendance à être fortement groupées, rapprochées et les données qui sont éloignées d'un ou de plusieurs groupes de données sont considérées comme des anomalies.
 
-Sachant que dans un ensemble de données, les anomalies sont plus ou moins très rare et très différentes, la méthode procède par isolation pour détecter ses anomalies. L'isolation consiste à construire un arbre de décision à partir des données jusqu'à ce que chaque individu soit dans une et une seule feuille.
+Sachant que dans un ensemble de données, les anomalies sont plus ou moins très rares et différentes, la méthode procède par isolation pour détecter ses anomalies. L'isolation consiste à construire un arbre de décision à partir des données jusqu'à ce que chaque individu soit dans une et une seule feuille.
 
-Une fois que les données sont isolés dans l'arbre de décision ou d'isolation, la probabilité qu'une donnée soit une anomalie est quantifié par sa profondeur dans l'arbre. Une données qui a été isolé très vite lors de la construction de l'arbre de décision a plus de probabilité d'être une anomalie.
+Une fois que les données sont isolées dans l'arbre de décision ou d'isolation, la probabilité qu'une donnée soit une anomalie est quantifiée par sa profondeur dans l'arbre. Une données qui a été isolée très vite lors de la construction de l'arbre de décision a plus de probabilité d'être une anomalie.
 
-Pour effectuer la détection d'anomalie par isolation, on choisi au hasard un échantillon dans une base de données, ensuite on choisi des variables au hasard parmi les variables de l'échantillon et on déroule un arbre de décision.
+Pour effectuer la détection d'anomalies par isolation, on choisi au hasard un échantillon dans une base de données, ensuite on choisi des variables au hasard parmi les variables de l'échantillon et on déroule un arbre de décision.
 
-On répète cette méthode n fois, on crée donc n arbres de d'isolation et d'échantillons différents tous tirés des données initiales. L'ensemble de ces arbres d'isolations est appelé forêt d'isolation.
+%On répète cette méthode n fois, on crée donc $n$ arbres d'isolation %et d'échantillons différents tous tirés des données initiales. %L'ensemble de ces arbres d'isolations est appelé forêt d'isolation.
 
 \section{Phase d'apprentissage}
 
 La phase d'apprentissage consiste à construire un ensemble d'arbre soit des \emph{iTree}, sur les données pour créer une forêt d'isolation, les \emph{iForest}.
 
-Le principe est relativement simple, et s'effectuer essentiellement en deux phases dont la première sera la construction de l'arbre de décision, puis par du bootstrapping la construction de la forêt de décision.
+Le principe est relativement simple, et s'effectue essentiellement en deux phases dont la première sera la construction de l'arbre de décision, puis par bootstrapping la construction de la forêt de décision.
 
 \subsection*{Construction de l'arbre de décision}
 
@@ -60,7 +60,7 @@ $I_m$ &  &  &  \\ \hline
 \end{tabular}
 \end{table}
 
-A partir de l'échantillon choisi de façon aléatoire, un arbre d'isolation (décision) est construit, de telle sorte que chaque individu se trouve seul sur une feuille, c'est à dire bout de chaque arbre. c'est la condition d'arrêt de la construction d'un arbre, mais toute fois elle peut être manipuler de telle sorte à pouvoir arrêter la construction d'un arbre trop profond.
+A partir de l'échantillon choisi de façon aléatoire, un arbre d'isolation (décision) est construit, de telle sorte que chaque individu se trouve seul sur une feuille au bout de l'arbre. c'est la condition d'arrêt de la construction d'un arbre, mais toute fois elle peut être manipulée de telle sorte à pouvoir arrêter la construction d'un arbre trop profond.
 
 Dans la phase d'apprentissage, trois paramètres sont donc nécessaires pour le déroulement de l'algorithme : 
 
@@ -69,7 +69,7 @@ Dans la phase d'apprentissage, trois paramètres sont donc nécessaires pour le 
     \item $\psi$ : la taille de l'échantillon
 \end{itemize}
 
-La taille de l'échantillon $\psi$ permet de contrôler la taille des données d'apprentissage. C'est un paramètre qui joue donc notamment sur la profondeur de l'arbre d'isolation et donc sur la performance de la méthode d'isolation. Par ailleurs, a partir d'une certaine taille, les performances de détections tendent à devenir constante, généralement $\psi=256$ est suffisant pour effectuer une détection d'anomalie dans une base de données.
+La taille de l'échantillon $\psi$ permet de contrôler la taille des données d'apprentissage. C'est un paramètre qui joue donc notamment sur la profondeur de l'arbre d'isolation et donc sur la performance de la méthode d'isolation. Par ailleurs, à partir d'une certaine taille, les performances de détections tendent à devenir constante, généralement $\psi=256$ est suffisant pour effectuer une détection d'anomalie dans une base de données.
 
 \subsection*{Construction de la forêt d'arbre de décision}
 Une forêt d'arbre de décision est composée de plusieurs arbres de décision. Sa construction s'effectue en ré-échantillonnant plusieurs fois avec la construction d'un arbre par échantillon. Ainsi, un autre paramètre vient s'ajouter aux deux autres, $t$ qui désigne le nombre d'arbre qui compose la forêt. En générale, le chemin d'isolation d'un individu dans un arbre converge avant la construction de $t=100$ arbres.
@@ -113,19 +113,19 @@ Maintenant que nous disposons d'un algorithme peu coûteux en temps et en mémoi
 
 \section{Le Standard \& Poor's 500}
 
-Le Standard \& Poor's 500 ou S\&P 500 est un indice bousier basé sur 500 grandes sociétés coté sur les bourses des États-Unis.
+Le Standard \& Poor's 500 ou S\&P 500 est un indice bousier basé sur un peu plus de 500 grandes sociétés cotées sur les bourses des États-Unis.
 \\
 \\
 Considérons l'historique des prix de clôture du marché de l'ensemble des actifs de l'indice entre le 11 Août 2015 et le  11 Août 2017. L'objectif de cette application, sera de détecter parmi les 500 actifs, les quelques uns qui ont des comportements très particuliers sur le marché.
 \\
 \\
-Cependant, il est nécessaire de noter que les interprétations sur les actifs anormaux dépendent fortement des variable qui caractérisent les actifs. Une données peut être identifier pout être anormale, mais la vrai question sera de savoir elle est anormale par rapport à quelle norme.
+Cependant, il est nécessaire de noter que les interprétations sur les actifs anormaux dépendent fortement des variable qui caractérisent les actifs. Une donnée peut être identifiée pour être anormale, mais l'essentiel sera de savoir dans quelle contexte elle est anormale.
 \\
 \\
-En fonction du type d'anomalie que l'on veut identifier, il faut veiller à travailler sur les bonnes variables, au risque de considérer des anomalies et résoudre des problèmes qui ne sont pas les leurs.
+En fonction du type d'anomalie que l'on veut identifier, il faut veiller à travailler sur les bonnes variables, au risque de considérer des anomalies et résoudre les mauvais problèmes.
 \\
 \\
-Notre objectif sera de détecter des actifs qui présentent des distributions de rendement anormaux sachant que par hypothèse les rendements historiques d'un actif suivent une loi normale centrée en zéro, c'est à dire que son espérance est nulle, avec une volatilité proportionnelle au temps. L'objectif de cette application est de savoir si il existe des actifs de l'indice S\&P 500 qui présentent une loi normale de caractéristique extrème par rapport aux autres synonyme de plus ou moins de risque.
+Notre objectif sera de détecter des actifs qui présentent des distributions de rendement anormaux sachant que par hypothèse les rendements historiques d'un actif suivent une loi normale centrée en zéro, c'est à dire que son espérance est nulle, avec une volatilité proportionnelle au temps. L'objectif de cette application est de savoir si il existe des actifs de l'indice S\&P 500 qui présentent une loi normale de caractéristique extrême par rapport aux autres, synonyme de plus ou moins de risque.
 
 \section{Isolation sur le Standard \& Poor's 500}
 
@@ -135,7 +135,7 @@ Cette application porte sur une étude des distributions des rendements de ces a
 
 \subsection{Les rendements}
 
-Le graphique suivant montre l'évolution des rendements moyens entre le 11 Août 2015 et le 11 Août 2017. Le rendements moyen est une juste le rendement journalier sur lequel on applique une moyenne mobile avec une fenêtre de quarante.
+Le graphique suivant montre l'évolution des rendements moyens entre le 11 Août 2015 et le 11 Août 2017. Le rendement moyen est le rendement journalier sur lequel on applique une moyenne mobile avec une fenêtre de quarante jours.
 
 \begin{figure}[H]
 \centering
@@ -143,11 +143,11 @@ Le graphique suivant montre l'évolution des rendements moyens entre le 11 Août
    \includegraphics[scale=0.5]{img/rendements.png}
 \end{figure}
 
-Ce graphique est touffu et pratiquement illisible, on a superposé 500 courbes et on en distingue clairement aucune. Cependant, en regardant hors des surcharges, on peu remarquer quelques courbes qui se distinguent fortement avec des piques bien au dessus et ou au dessous de la moyenne des autres. Ce sont ces genres d'actifs que l'on veut détecter, les actifs avec un profil historique de rendement moyen totalement différent voir exceptionnel des autres. Une fois détecter, un ensemble d'étude peuvent être menez pour expliquer ce résultat.
+Ce graphique est touffu et pratiquement illisible, on a superposé 500 courbes et on en distingue clairement aucune. Cependant, en regardant hors des surcharges, on peu remarquer quelques courbes qui se distinguent fortement avec des piques bien au dessus et ou au dessous de la moyenne des autres. Ce sont ces genres d'actifs que l'on veut détecter, les actifs avec un profil historique de rendement moyen totalement différent voir exceptionnel des autres. Une fois détecté, un ensemble d'étude peuvent être menées pour interpréter ces résultats.
 
 \subsection{Les volatilités}
 
-Le graphique suivant montre l'évolution des volatilités des rendements moyens entre le 11 Août 2015 et le 11 Août 2017. La volatilité moyenne se mesure sur le rendement est une juste le rendement journalier sur lequel on applique une moyenne mobile avec une fenêtre de quarante.
+Le graphique suivant montre l'évolution des volatilités des rendements moyens entre le 11 Août 2015 et le 11 Août 2017. La volatilité moyenne mobile sur une fenêtre de quarante jour.
 
 \begin{figure}[H]
 \centering
@@ -155,12 +155,12 @@ Le graphique suivant montre l'évolution des volatilités des rendements moyens 
    \includegraphics[scale=0.5]{img/volatilites.png}
 \end{figure}
 
-Le graphique des volatilités mène aux mêmes observations que celle des rendements. On observe une masse bien dense de courbe qui se superpose puis quelques une qui se démarquent clairement par endroit.
+On observe une masse bien dense de courbe qui se superposent puis quelques unes qui se démarquent clairement par endroit.
 Sachant que la volatilité d'un actif détermine le niveau de risque de ce actif, il n'est pas exagéré de vouloir porter un œil sur ce actif afin d'en évaluer efficacement le risque.
 
 \subsection{Densité de probabilité des rendements}
 
-Les rendements d'un actif suivent une loi normale centrée en 0 avec une certaine volatilité.  Les paramètres donc de volatilité et de rendements caractérisent la densité de la loi que suivra les rendements. C'est à dire qu'en étudiant la fonction de densité des rendements des actifs on porte aussi un œil sur les deux paramètres qui la caractérisent.
+Les rendements d'un actif suivent une loi normale centrée en 0 avec une certaine volatilité.  Les paramètres donc de volatilité et de rendements caractérisent la densité de la loi que suivra les rendements. C'est à dire qu'en étudiant la fonction de densité des rendements des actifs on porte aussi un œil sur ses deux premiers paramètres
 
 La fonction de densité d'un actif dans cette application à été approximé de manière non paramétrique par la méthode d'estimation par noyaux\footnote{ Méthode de Parzen-Rosenblatt (wikipedia)}. Cette méthode est implémentée dans trois bibliothèque python et sont accessible de façon simple.
 
@@ -174,7 +174,7 @@ En utilisant cette méthode pour obtenir la courbe des distributions et en les s
 
 \subsection{Densité par la méthode des histogrammes}
 
-En regardant de plus près, en visualisant de façon empirique les différentes distributions, en utilisant un graphique d’histogramme lissé on appercoit qu'en réalité les loi de probabilités des rendement sont différentes. Les différences se situent notemment soit à la base, au sommet et à la forme. Certaines distribution sont plus éfilé que d'autres. 
+En regardant de plus près, en visualisant de façon empirique les différentes distributions, en utilisant un graphique d’histogramme lissé on aperçoit qu'en réalité les loi de probabilités des rendements sont différentes. Les différences se situent notamment soit à la base, au sommet et à la forme. Certaines distributions sont plus effilées que d'autres. 
 
 La figure ce dessous illustre les différences de distribution de rendements entre 4 quatre  actifs qui composent le S\&P 500 choisies aléatoirement.
 
@@ -199,22 +199,19 @@ AAP : Advance Auto Parts \\ \hline
    \includegraphics[scale=0.7]{img/distrib2.png}
 \end{figure}
 
-On peut noter que la loi des rendements n'est pas exactement normale, c'est une hypothèse qui est faite, avec pour principale conséquence biais dans la quantification de risque, notamment dans le calcul d'indicateur de risque comme la Value at Risk (VaR).
+On peut noter que la loi des rendements n'est pas exactement normale, c'est une hypothèse, avec pour principale conséquence un biais dans la quantification de risque, notamment dans le calcul d'indicateur la Value at Risk (VaR).
 
-Ces différentes courbes, apporte une précision sur la loi de probabilité des rendements de chaque actif avec les différences qui peuvent exister entre elles. Des différences qui peuvent principalement être interprétez comme une comparaison du niveau de risque. Certains actifs seront plus risqués que d'autres, et ceux qui présentes soit des niveaux de risque extrêmes (faibles ou élevé) peuvent être intéressant à détecter. C'est ainsi qu'intervient la détection d'anomalie, par une méthode qui va isoler ces actifs "particuliers", c'est à dire ceux avec un profil de rendement extrêmement différent des autres.
+Ces différentes courbes, apporte une précision sur la loi de probabilité des rendements de chaque actif avec les différences qui peuvent exister entre elles. Des différences qui peuvent principalement être interprétées comme une comparaison du niveau de risque. Certains actifs seront plus risqués que d'autres, et ceux qui présentent soit des niveaux de risque extrêmes (faibles ou élevé) peuvent être intéressant à détecter. C'est ainsi qu'intervient la détection d'anomalie, par une méthode qui va isoler ces actifs "particuliers", c'est à dire ceux avec un profil de rendement différent.
 
 \section{Isolation des actifs}
 
-La méthode de détection d'anomalie par isolation est implémentée  dans une libraie de machine learning python qui est Scikitlearn sous le nom de \emph{sklearn.ensemble.IsolationForest} \footnote{Documentation : http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html\#id1}. 
+La méthode de détection d'anomalie par isolation est implémentée  dans une librairie de machine learning python qui est Scikitlearn sous le nom de \emph{sklearn.ensemble.IsolationForest} \footnote{Documentation : http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html\#id1}. 
 
-Deux approches seront utilisées pour détecter les actifs qui présentent des "anomalies" de rendement. Une approche standard, directement appliquée sur la distribution des rendements puis une autre approche basée sur la forme de la distribution des rendements.
+Deux approches seront utilisées pour isoler les actifs qui présentent des "anomalies" de rendement. Une approche standard, directement appliquée sur la distribution des rendements puis une autre approche basée sur la forme de courbe de la distribution des rendements.
 
 \subsection{Isolation des distributions}
 
-L'utilisation de la méthode de détection d'anomalie par isolation s'éffectue de la manière suivante : 
-
-
-Une fois la méthode appliquée, elle retourne en résultat les actifs qu'elle aura isolé et qui donc présentent des anomalies. Pour isoler ces actifs elle se base sur le score de chaque actif, ceux avec les scores les plus faible ont une forte probabilité d'être des anomalies.
+En appliquant la méthode de détection d'anomalies par isolation,on obtient les actifs qu'elle aura isolé et qui donc présentent des différences signifiantes. Pour isoler ces actifs elle se base sur le score de chaque actif, ceux avec les scores les plus faibles ont une forte probabilité d'être des anomalies.
 
 Ainsi l'ensemble des scores pour l'ensemble des actifs sont : 
 
@@ -245,14 +242,14 @@ En conclusion la liste des anomalies identifiées avec leurs scores dans la figu
 
 \subsection{Identification des différences}
 
-On retient donc que ces actifs listés ci dessus présenteront des distributions peu commune de l'ensemble des 500 actifs du S\&P 500 considérés au départ.
+On retient donc que ces actifs listés ci dessus présenteront des distributions peu communes de l'ensemble des 500 actifs du S\&P 500 considérés au départ.
 Maintenant clarifions un peu le tout par une comparaison entre distribution "normale" et "anormale".
 
 Soit les actifs anormaux qui ont été isolés 'ALGN' et 'ADSK'. 
 \\
 Soit les actifs normaux 'A' et 'ABBV'.
 
-Une comparaison des distribution de ces quatre actifs donne le graphique suivant : 
+Une comparaison des distributions de ces quatre actifs donne le graphique suivant : 
 
 \begin{figure}[H]
 \centering
@@ -261,7 +258,7 @@ Une comparaison des distribution de ces quatre actifs donne le graphique suivant
  \label{anorm}
 \end{figure}
 
-Les courbes en vert présentent les distributions normales, et ceux en rouge les distributions isolées comme anomaliées. La différence peut être résumé  comme suit :
+Les courbes en vert présentent les distributions normales, et ceux en rouge les distributions isolées. La différence peut être résumé  comme suit :
 \begin{itemize}
 \item Les distributions normales (en vert dans la figure \ref{anorm}) ont des courbes avec une base fine, mais élancées en zéro
 \item  Les distributions anormales (en rouge dans la figure \ref{anorm}) ont des courbes plus tassées en zéro avec une base plus épaisse.
@@ -272,9 +269,9 @@ La détection d'anomalie a été significative, elle a permit d'indexer directem
 
 \section{Isolation des actifs avec Nielson-Siegel-Svensson}
 
-L'isolation par Nielson siegel svensson Consiste à recommencer le procédé de la section précédente sauf que dans ce cas c'est juste les données qui change. En effet, les distribution de probabilités sont passées à NSS, qui retourne les 6 coeffiscients pour chaque distribution qui résume la forme de sa courbe. On passe d'un historique de rendement sur deux ans, à essentiellement 6 variables sur lesquelles on applique la méthode de détection par anomalie.
+L'isolation par Nielson siegel svensson Consiste à recommencer le procédé de la section précédente savec différentes donnée. En effet, les distribution de probabilités sont passées à NSS, qui retourne les 6 coefficients pour chaque distribution qui résument la forme de sa courbe\footnote{L'application de la méthode de NSS sur l'historique des rendements pour les 500 actifs a duré 2 heures, pour un processeurs i7 quand core 2.6GHz }. On passe d'un historique de rendement sur deux ans, à essentiellement 6 variables sur lesquelles on applique la méthode de détection par isolation.
 
-Il est important de préciser que les lois des rendements ont été estimé de façon non paramétrique en utilisant la méthode du noyau (méthode de Parzen-Rosenblatt).
+Il est important de préciser que les lois des rendements ont été estimées de façon non paramétrique en utilisant la méthode du noyau (méthode de Parzen-Rosenblatt).
 
 On obtient les résultats suivants :
 
@@ -291,7 +288,7 @@ Score des anomalies isolées par la méthode de détection :
 
 \begin{figure}[H]
 \centering
-\caption{Comparaison entre actifs "anormales" et "normals" (NSS)}
+\caption{Comparaison entre actifs "anormaux" et "normaux" (NSS)}
    \includegraphics[scale=0.35]{img/scores_densite_NSS.png}
  \label{anormm1}
 \end{figure}
