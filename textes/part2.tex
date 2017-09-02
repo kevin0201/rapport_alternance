@@ -90,7 +90,7 @@ La complexité dans le pire des cas ce la phase d'évaluation est de $O(nt\psi)$
 Un score, pour déterminer le degré d'anormalité d'un individu est essentiel à toute méthode de détection d'anomalie.
 Le score $s$ d'un individu I se calcul comme :
 \begin{equation}
-    s(I,\psi)=2^\frac{E(h(x))}{c(\psi=)}
+    s(I,\psi)=2^\frac{E(h(x))}{c(\psi)}
 \end{equation}
 
 \begin{itemize}
@@ -104,6 +104,14 @@ Dans certaines conditions la valeur du score est directement déduite :
     \item $E(h(x)) \rightarrow \psi-1,  s \rightarrow 0; $
     \item $E(h(x)) \rightarrow c(\psi),  s \rightarrow 0.5;$
 \end{itemize}
+
+En posant :
+
+\begin{equation}
+    s(I,\psi)=0,5 - 2^\frac{E(h(x))}{c(\psi)}
+\end{equation}
+
+plus le score est faible plus la probabilité d'être une anomalie est grande.
 
 \chapter{Application}
 
